@@ -10,6 +10,8 @@ use App\Models\Blog;
 use App\Models\Product;
 use Illuminate\Support\Facades\Validator;
 
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+
 class BlogController extends Controller
 {
     public function index(){
@@ -27,12 +29,11 @@ class BlogController extends Controller
     public function store(Request $req) {
 
         $validator = Validator::make($req->all(),[
-
             'title' => 'required|string|max:255',
             'description' => 'required',
-            'image_url' => 'required|string|max:255',
+            'image' => 'nullable',
             'author_name' => 'required|string',
-            'status' => 'boolean',
+            'status' => 'required'
         ]);
         
         if ($validator->fails()){
@@ -42,32 +43,56 @@ class BlogController extends Controller
             ], 422);
         }
 
-        $status = $req->has('status') ? $req->input('status') : false;
+        if ($req->hasFile('image')) {
+            $cloudinaryImage = $req->file('image')->storeOnCloudinary('blogs');
+            $url = $cloudinaryImage->getSecurePath();
+            $public_id = $cloudinaryImage->getPublicId();
+        } 
+
+        $status = $req->has('status') ? $req->input('status') : 1;
 
         $new_blog = Blog::create([
             'title'=>$req->title,
             'description'=>$req->description,
-            'image_url'=>$req->image_url,
+            'image_url'=>$url,
+            'image_public_id'=>$public_id,
             'author_name'=>$req->author_name,
-            'status'=>$status,
+            'status'=>$status
         ]);
 
         return response()->json([
             'msg' => "Blog created successfully!",
-            'data' => $new_blog
+            'data' => $new_blog,
         ]);
 
     }
+    
     public function show(Blog $blog) {
         return new BlogResource($blog);
     }
-    public function update(Request $req, Blog $blog) {
-        $validator = Validator::make($req->all(),[
-            'title' => 'required|string|max:255',
+    
+    public function update(Request $request, Blog $blog) {
+        dd($request->all());
+        // print_r($request->all());
+        
+        // // $request->validate([
+        // //     'title'=>'required|string',
+        // // ]);
+
+
+        // if ($request->hasFile('image')){
+        //     print("imageeeee");
+        // }else{
+        //     print("not");
+        // }
+        // // return;
+        
+        $validator = Validator::make($request->all(),[
+            'title' => 'required',
             'description' => 'required',
-            'image_url' => 'required|string|max:255',
+            'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png,gif,webp,svg,avif'],
             'author_name' => 'required|string',
-            'status' => 'boolean',
+            'status' => 'required',
         ]);
         
         if ($validator->fails()){
@@ -77,12 +102,22 @@ class BlogController extends Controller
             ], 422);
         }
 
+        if ($request->hasFile('image')) {
+            Cloudinary::destroy($blog->image_public_id);
+
+            $cloudinaryImage = $request->file('image')->storeOnCloudinary('blogs');
+            $url = $cloudinaryImage->getSecurePath();
+            $public_id = $cloudinaryImage->getPublicId();
+        } 
+
+
         $blog->update([
-            'title'=>$req->title,
-            'description'=>$req->description,
-            'image_url'=>$req->image_url,
-            'author_name'=>$req->author_name,
-            'status'=>$req->status,
+            'title'=>$request->title,
+            'description'=>$request->description,
+            // 'image_url'=>$url,
+            // 'image_public_id'=>$public_id,
+            'author_name'=>$request->author_name,
+            'status'=>$request->status,
         ]);
 
         return response()->json([

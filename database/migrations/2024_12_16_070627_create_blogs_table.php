@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->mediumText('description');
             $table->string('image_url');
+            $table->string('image_public_id');
             $table->string('author_name');
             $table->string('author_designation')->nullable();
             $table->integer('status')->default(1)->comment("0:active, 1:inactive");
