@@ -12,7 +12,7 @@
 @section('content')
 
 <div class="card mt-5">
-    <h2 class="card-header">BLOG</h2>
+    <h2 class="card-header">BLOGs</h2>
     <div class="card-body">
             
           {{-- @session('success')
@@ -27,6 +27,7 @@
               <thead>
                   <tr>
                       <th width="80px">No</th>
+                      <th>Image</th>
                       <th>Blog Title</th>
                       <th>Description</th>
                       <th>Author</th>
@@ -39,6 +40,9 @@
               @forelse ($blogs as $blog)
                 <tr>
                     <td>{{ ++$i }}</td>
+                    <td>
+                        <img src="{{$blog->image_url }}" alt="{{ $blog->title }}" width="50">
+                    </td>
                     <td>{{ $blog->title }}</td>
                     <td>{{ $blog->description }}</td>
                     <td>{{ $blog->author_name}}</td>
@@ -51,7 +55,7 @@
                     
                     </td>
                     <td>
-                        <form action="{{ route('blogs.destroy',$blog->id) }}" method="POST">
+                        <form action="{{ url('api/blog',$blog->id) }}" method="POST">
             
                             <a class="btn btn-info btn-sm" href="{{ route('blogs.show',$blog->id) }}"><i class="fa-solid fa-list"></i> Show</a>
             

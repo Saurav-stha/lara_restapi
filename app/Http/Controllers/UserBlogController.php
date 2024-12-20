@@ -23,7 +23,7 @@ class UserBlogController extends Controller
     public function edit(Blog $blog) {
         return view('blogs.edit',compact('blog'));
     }
-    public function create(Blog $blog){
-        return view("blogs.create",compact('blog'));
+    public function create(){
+        return view("blogs.create");
     }
 }

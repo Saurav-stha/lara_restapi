@@ -67,6 +67,11 @@ class BlogController extends Controller
             'status'=>$status
         ]);
 
+        $blogs = Blog::get();
+        $i=0;
+
+        return view('blogs.index', compact('blogs','i'));
+
         return response()->json([
             'msg' => "Blog created successfully!",
             'data' => $new_blog,
@@ -79,21 +84,7 @@ class BlogController extends Controller
     }
     
     public function update(Request $request, Blog $blog) {
-        dd($request->all());
-        // print_r($request->all());
-        
-        // // $request->validate([
-        // //     'title'=>'required|string',
-        // // ]);
-
-
-        // if ($request->hasFile('image')){
-        //     print("imageeeee");
-        // }else{
-        //     print("not");
-        // }
-        // // return;
-        
+        // return $request->file('image');
         $validator = Validator::make($request->all(),[
             'title' => 'required',
             'description' => 'required',
@@ -110,7 +101,9 @@ class BlogController extends Controller
         }
 
         if ($request->hasFile('image')) {
-            Cloudinary::destroy($blog->image_public_id);
+            if ($blog->image_public_id) {
+                Cloudinary::destroy($blog->image_public_id);
+            }
 
             $cloudinaryImage = $request->file('image')->storeOnCloudinary('blogs');
             $url = $cloudinaryImage->getSecurePath();
@@ -121,18 +114,23 @@ class BlogController extends Controller
         $blog->update([
             'title'=>$request->title,
             'description'=>$request->description,
-            // 'image_url'=>$url,
-            // 'image_public_id'=>$public_id,
+            'image_url'=>$url,
+            'image_public_id'=>$public_id,
             'author_name'=>$request->author_name,
             'status'=>$request->status,
         ]);
 
+        return view('blogs.show', compact('blog'));
         return response()->json([
             'msg' => "Blog updated successfully!",
             'data' => $blog
         ]);
     }
-    public function destroy() {
-        
+    public function destroy(Blog $blog) {
+        $blog->delete();
+
+        $blogs = Blog::get();$i=0;
+
+        return view('blogs.index', compact('blogs','i'));
     }
 }

@@ -10,7 +10,7 @@
         <a class="btn btn-primary btn-sm" href="{{ route('blogs.index') }}"><i class="fa fa-arrow-left"></i> Back</a>
     </div>
   
-    <form action="{{ url('api/blog',$blog->id) }}" method="PUT" enctype="multipart/form-data">
+    <form action="{{ url('api/blog',$blog->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
   
@@ -33,9 +33,9 @@
             <textarea 
                 class="form-control @error('detail') is-invalid @enderror" 
                 style="height:150px" 
-                name="detail" 
+                name="description" 
                 id="inputDetail" 
-                placeholder="Detail">{{ $blog->description }}</textarea>
+                placeholder="Description here...">{{ $blog->description }}</textarea>
             @error('detail')
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
@@ -49,7 +49,7 @@
                 class="form-control @error('author_name') is-invalid @enderror" 
                 id="inputName" 
                 placeholder="Author Name"
-                value="{{ $blog->author_name }}">
+                value="{{ $blog->author_name }}">   
             @error('author_name')
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
