@@ -47,9 +47,16 @@ class BlogController extends Controller
             $cloudinaryImage = $req->file('image')->storeOnCloudinary('blogs');
             $url = $cloudinaryImage->getSecurePath();
             $public_id = $cloudinaryImage->getPublicId();
-        } 
+        }else{
+            $url = null;
+            $public_id = null;
 
-        $status = $req->has('status') ? $req->input('status') : 1;
+            return response()->json([
+                'msg' => "Image is required!",
+            ], 422);
+        }
+
+        $status = $req->has('status') ? intval($req->input('status')) : 1;
 
         $new_blog = Blog::create([
             'title'=>$req->title,

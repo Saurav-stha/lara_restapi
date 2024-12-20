@@ -19,6 +19,11 @@
                     {{ __('Logged in!') }}
                 </div>
             </div>
+            <div class="card">
+                <a href="{{ route('blogs') }}">
+                    {{ __('View Blogs') }}
+                </a>
+            </div>
         </div>
     </div>
 </div>
