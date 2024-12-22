@@ -64,7 +64,8 @@
                   id="inputName" 
                   placeholder="Upload..."
                   >
-                  <img src="{{ $blog->image_url }}" alt="{{ $blog->title }}" width="100" height="100">
+                <img src="{{ $blog->image_url }}" alt="{{ $blog->title }}" width="100" height="100">
+                <input type="text" name="image_url" id="" value="{{ $blog->image_url }}" width="100" height="100" readonly>
               @error('image')
                   <div class="form-text text-danger">{{ $message }}</div>
               @enderror

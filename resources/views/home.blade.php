@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="card">
-                <a href="{{ route('blogs') }}">
+                <a href="{{ route('blogs.index') }}">
                     {{ __('View Blogs') }}
                 </a>
             </div>

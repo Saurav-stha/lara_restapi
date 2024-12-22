@@ -84,11 +84,12 @@ class BlogController extends Controller
     }
     
     public function update(Request $request, Blog $blog) {
-        // return $request->file('image');
         $validator = Validator::make($request->all(),[
             'title' => 'required',
             'description' => 'required',
             'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png,gif,webp,svg,avif'],
+            'image_url' => ['nullable','string'],
+            'image_public_id' => ['nullable','string'],
             'author_name' => 'required|string',
             'status' => 'required',
         ]);
@@ -108,7 +109,10 @@ class BlogController extends Controller
             $cloudinaryImage = $request->file('image')->storeOnCloudinary('blogs');
             $url = $cloudinaryImage->getSecurePath();
             $public_id = $cloudinaryImage->getPublicId();
-        } 
+        }else{
+            $url = $blog->image_url;
+            $public_id = $blog->image_public_id;
+        }
 
 
         $blog->update([
