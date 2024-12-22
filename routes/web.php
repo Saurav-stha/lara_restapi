@@ -3,10 +3,18 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UserBlogController;
+use App\Http\Controllers\SocialiteController;
+use Laravel\Socialite\Facades\Socialite;
+
 // ADMIN API
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::controller(SocialiteController::class)->group(function(){
+    Route::get("/auth/google", 'googleLogin')->name('auth.google');
+    Route::get("/auth/google/callback", 'googleAuthentication')->name('auth.google-callback');
 });
 
 Auth::routes();

@@ -53,6 +53,13 @@
 
                         <div class="row mb-0">
                             <div class="col-md-8 offset-md-4">
+
+                                <a href="{{ url('auth/google')}}" 
+                                    class="inline-block px-6 py-2 bg-blue-500 text-black font-semibold rounded-lg shadow-md" 
+                                    style="border-width: 2px; border-color: transparent;">
+                                Google
+                                </a>
+
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
                                 </button>
