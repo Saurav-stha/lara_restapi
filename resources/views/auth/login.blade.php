@@ -53,12 +53,8 @@
 
                         <div class="row mb-0">
                             <div class="col-md-8 offset-md-4">
+                                
 
-                                <a href="{{ url('auth/google')}}" 
-                                    class="inline-block px-6 py-2 bg-blue-500 text-black font-semibold rounded-lg shadow-md" 
-                                    style="border-width: 2px; border-color: transparent;">
-                                Google
-                                </a>
 
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
@@ -73,6 +69,10 @@
                                     <a class="btn-link" href="{{ route('register') }}">{{ __("Don't have an account?") }}</a>
                                     
                                 @endif
+
+                                    <a href="{{ url('auth/google')}}" class="btn" style="background-color: #ffff; border:1px solid #000;">
+                                        <i class="fab fa-google" style="margin-right: 5px;"></i>Google
+                                    </a>
                             </div>
                         </div>
                     </form>
