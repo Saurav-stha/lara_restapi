@@ -7,7 +7,7 @@
   <div class="card-body">
   
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <a class="btn btn-primary btn-sm" href="{{ route('blogs.index') }}"><i class="fa fa-arrow-left"></i> Back</a>
+        <a class="btn btn-primary btn-sm" href="{{ url()->previous() }}"><i class="fa fa-arrow-left"></i> Back</a>
     </div>
   
     <div class="row">
@@ -49,6 +49,8 @@
         </div>
     </div>
   
+    <a class="btn btn-primary btn-sm" href="{{ route('blogs.edit',$blog->id) }}"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
+
   </div>
 </div>
 @endsection
