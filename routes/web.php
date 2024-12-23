@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UserBlogController;
 use App\Http\Controllers\SocialiteController;
+use App\Http\Controllers\GenreController;
+use App\Http\Controllers\GenreViewController;
 use Laravel\Socialite\Facades\Socialite;
 
 // ADMIN API
@@ -27,3 +29,14 @@ Route::get('/blogs/edit/{blog}', [UserBlogController::class,'edit'])->name('blog
 Route::get('/blogs', [UserBlogController::class,'index'])->name('blogs.index');
 Route::get('/blogs/show/{blog}', [UserBlogController::class,'show'])->name('blogs.show');
 Route::get('/blogs/destroy', [UserBlogController::class,'destroy'])->name('blogs.destroy');
+
+Route::prefix('genre')
+    ->controller(GenreController::class)
+    ->group(function(){
+        Route::get('/create', 'create')->name('genre.create');
+        Route::get('/edit/{genre}', 'edit')->name('genre.edit');
+        Route::get('/', 'index')->name('genre.index');
+        Route::post('/','store')->name('genre.store');
+        Route::put('/{genre}','update')->name('genre.update');
+        Route::delete('/{genre}','destroy')->name('genre.destroy');
+});

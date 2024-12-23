@@ -24,6 +24,11 @@
                     {{ __('View Blogs') }}
                 </a>
             </div>
+            <div class="card">
+                <a href="{{ route('genre.index') }}">
+                    {{ __('Genre') }}
+                </a>
+            </div>
         </div>
     </div>
 </div>

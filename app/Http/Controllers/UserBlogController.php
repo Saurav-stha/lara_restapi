@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
 use App\Models\Blog;    
 use App\Http\Resources\BlogResource;
+use App\Models\Genre;
 
 class UserBlogController extends Controller
 {
@@ -24,6 +25,7 @@ class UserBlogController extends Controller
         return view('blogs.edit',compact('blog'));
     }
     public function create(){
-        return view("blogs.create");
+        $genres = Genre::all();
+        return view("blogs.create",compact('genres'));
     }
 }

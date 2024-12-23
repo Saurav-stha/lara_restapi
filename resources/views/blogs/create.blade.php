@@ -67,6 +67,22 @@
               @enderror
           </div>
 
+          {{-- GENRE --}}
+          <div class="mb-3">
+            <label for="genre" class="form-label"><strong>Genre:</strong></label>
+            <select 
+                name="genre" 
+                class="form-control @error('genre') is-invalid @enderror" 
+                id="genre">
+                <option value="">Select Genre...</option>
+                @foreach($genres as $genre)
+                    <option value="{{ $genre->genre_name }}">{{ $genre->genre_name }}</option>
+                @endforeach
+            </select>        @error('genre')
+                <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
           <div class="mb-3">
             <label for="status" class="form-label"><strong>Status:</strong></label>
             <div class="form-check">

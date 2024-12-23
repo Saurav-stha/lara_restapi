@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('image_public_id');
             $table->string('author_name');
             $table->string('author_designation')->nullable();
+            $table->string('genre')->nullable();
             $table->integer('status')->default(1)->comment("0:active, 1:inactive");
             $table->timestamps();
         });

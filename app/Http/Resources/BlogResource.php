@@ -23,6 +23,7 @@ class BlogResource extends JsonResource
             'image_url' => $this->image_url,
             'author_name' => $this->author_name,
             'status' => $this->status,
+            'genre' => $this->genre,
             'created_at' => $this->created_at,
         ];
     }
