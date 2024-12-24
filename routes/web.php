@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UserBlogController;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\GenreController;
-use App\Http\Controllers\GenreViewController;
+use App\Http\Controllers\MailController;
 use Laravel\Socialite\Facades\Socialite;
 
 // ADMIN API
@@ -40,3 +40,8 @@ Route::prefix('genre')
         Route::put('/{genre}','update')->name('genre.update');
         Route::delete('/{genre}','destroy')->name('genre.destroy');
 });
+
+Route::get('send-mail', [MailController::class, 'index']);
+
+
+
