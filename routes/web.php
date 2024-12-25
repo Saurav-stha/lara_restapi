@@ -6,6 +6,8 @@ use App\Http\Controllers\UserBlogController;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\UploadController;
+use App\Models\User;
 use Laravel\Socialite\Facades\Socialite;
 
 // ADMIN API
@@ -24,11 +26,14 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // name = route ko lagi name define gareko ho 
-Route::get('/blogs/create', [UserBlogController::class,'create'])->name('blogs.create');
-Route::get('/blogs/edit/{blog}', [UserBlogController::class,'edit'])->name('blogs.edit');
-Route::get('/blogs', [UserBlogController::class,'index'])->name('blogs.index');
-Route::get('/blogs/show/{blog}', [UserBlogController::class,'show'])->name('blogs.show');
-Route::get('/blogs/destroy', [UserBlogController::class,'destroy'])->name('blogs.destroy');
+Route::prefix('blogs')
+    ->controller(UserBlogController::class)
+    ->group(function(){
+        Route::get('/create', 'create')->name('blogs.create');
+        Route::get('/edit/{blog}', 'edit')->name('blogs.edit');
+        Route::get('/', 'index')->name('blogs.index');
+        Route::get('/show/{blog}', 'show')->name('blogs.show');
+});
 
 Route::prefix('genre')
     ->controller(GenreController::class)
@@ -42,6 +47,8 @@ Route::prefix('genre')
 });
 
 Route::get('send-mail', [MailController::class, 'index']);
+Route::get('bulk-upload', [UploadController::class, 'index'])->name('upload.index');
+Route::post('bulk-upload', [UploadController::class, 'store'])->name('upload.store');
 
 
 

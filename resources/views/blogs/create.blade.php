@@ -78,7 +78,8 @@
                 @foreach($genres as $genre)
                     <option value="{{ $genre->genre_name }}">{{ $genre->genre_name }}</option>
                 @endforeach
-            </select>        @error('genre')
+            </select>        
+            @error('genre')
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>

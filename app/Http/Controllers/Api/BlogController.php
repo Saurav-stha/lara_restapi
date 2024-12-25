@@ -33,6 +33,7 @@ class BlogController extends Controller
             'description' => 'required',
             'image' => 'nullable',
             'author_name' => 'required|string',
+            'genre' => 'required|string',
             'status' => 'required'
         ]);
         
@@ -58,25 +59,17 @@ class BlogController extends Controller
 
         $status = $req->has('status') ? intval($req->input('status')) : 1;
 
-        $new_blog = Blog::create([
+        Blog::create([
             'title'=>$req->title,
             'description'=>$req->description,
             'image_url'=>$url,
             'image_public_id'=>$public_id,
             'author_name'=>$req->author_name,
+            'genre'=>$req->genre,
             'status'=>$status
         ]);
 
-        $blogs = Blog::get();
-        $i=0;
-
-        return view('blogs.index', compact('blogs','i'));
-
-        return response()->json([
-            'msg' => "Blog created successfully!",
-            'data' => $new_blog,
-        ]);
-
+        return redirect('blogs')->with('success','Blog Created Successfully!');
     }
     
     public function show(Blog $blog) {
@@ -125,10 +118,7 @@ class BlogController extends Controller
         ]);
 
         return view('blogs.show', compact('blog'));
-        return response()->json([
-            'msg' => "Blog updated successfully!",
-            'data' => $blog
-        ]);
+
     }
     public function destroy(Blog $blog) {
         $blog->delete();

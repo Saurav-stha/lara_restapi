@@ -31,6 +31,12 @@
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 mt-2">
             <div class="form-group">
+                <strong>Genre:</strong> <br/>
+                {{ $blog->genre }}
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 mt-2">
+            <div class="form-group">
                 <strong>Image:</strong> <br/>
                 <img src="{{ $blog->image_url }}" alt="{{$blog->title}}" style="max-width: 10%; height: auto;">
             </div>

@@ -29,6 +29,11 @@
                     {{ __('Genre') }}
                 </a>
             </div>
+            <div class="card">
+                <a href="{{ route('upload.index') }}">
+                    {{ __('Bulk Upload') }}
+                </a>
+            </div>
         </div>
     </div>
 </div>
