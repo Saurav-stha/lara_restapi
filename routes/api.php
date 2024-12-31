@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::apiResource('product', ProductController::class);
-Route::apiResource('blog', BlogController::class);
+Route::apiResource('blog', BlogController::class); //route is api/blog, created for crud
 
 Route::get('/user', function (Request $request) {
     return $request->user();

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\ProductImport;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\UserImport;
@@ -13,9 +14,11 @@ class UploadController extends Controller
     }
 
     public function store(Request $request) {
-        Excel::import(new UserImport, $request->file('uploadedFile'));
+        // dd($model);
+        // Excel::import(new UserImport, $request->file('uploadedFile'));
+        Excel::import(new ProductImport, $request->file('uploadedFile'));
 
-        dd('done');
+        dd('uploaded users in your database successfully!');
 
     }
 }

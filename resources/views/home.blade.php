@@ -29,11 +29,14 @@
                     {{ __('Genre') }}
                 </a>
             </div>
+
+            @if(Auth::user()->role == 1)
             <div class="card">
                 <a href="{{ route('upload.index') }}">
                     {{ __('Bulk Upload') }}
                 </a>
             </div>
+            @endif
         </div>
     </div>
 </div>

@@ -7,7 +7,8 @@ use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\UploadController;
-use App\Models\User;
+// use App\Http\Middleware\AdminMiddleware;
+use App\Models\User; 
 use Laravel\Socialite\Facades\Socialite;
 
 // ADMIN API
@@ -27,6 +28,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 // name = route ko lagi name define gareko ho 
 Route::prefix('blogs')
+    ->middleware(['auth','is_admin:1'])//0=admin, 1=user
     ->controller(UserBlogController::class)
     ->group(function(){
         Route::get('/create', 'create')->name('blogs.create');
@@ -47,8 +49,20 @@ Route::prefix('genre')
 });
 
 Route::get('send-mail', [MailController::class, 'index']);
-Route::get('bulk-upload', [UploadController::class, 'index'])->name('upload.index');
-Route::post('bulk-upload', [UploadController::class, 'store'])->name('upload.store');
+
+Route::prefix('bulk-upload')
+    ->middleware(['auth','is_admin:1'])//0=admin, 1=user
+    ->controller(UploadController::class)
+    ->group(function(){
+        Route::get('/', 'index')->name('upload.index');
+});
+
+Route::prefix('bulk-upload')
+    ->middleware(['upload'])//0=admin, 1=user
+    ->controller(UploadController::class)
+    ->group(function(){
+        Route::post('/','store')->name('upload.store');
+});
 
 
 
